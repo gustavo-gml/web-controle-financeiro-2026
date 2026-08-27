@@ -60,7 +60,7 @@ function addTransacaoAoDOM(transacao) {
     const classe = transacao.valor >= 0 ? 'positivo' : 'negativo'
 
     const li = document.createElement('li');
-    li.innerHTML = `${transacao.descricao}<span>R$ ${transacao.valor}</span><button class="delete-btn">X</button>`
+    li.innerHTML = `${transacao.descricao}<span>R$ ${transacao.valor}</span><button onClick="excluiTransacao(${transacao.id})"class="delete-btn">X</button>`
     li.classList.add(classe)
 
     transacoesUl.append(li)//não pode innerhtml
@@ -81,12 +81,12 @@ function somaReceitaDespesa(transacao) {
 function somaAoSaldo(transacao) {
     const valorTransacao = transacao.valor; // pegamos para não mudar o valor inicial
 
-    let total = balancoH1.innerHTML.replace('+ R$', ''); //não é o input (é uma tag), por isso o innerhtml
+    let total = balancoH1.innerHTML.replace('R$', ''); //não é o input (é uma tag), por isso o innerhtml
     // .replace é um método da string que substitui
-    console.log(total)
+    
     total = parseFloat(total);
     total += valorTransacao;
-    console.log(typeof(total))
+    
     balancoH1.innerHTML = `R$${total.toFixed(2)}`;
 }
 
@@ -105,3 +105,12 @@ function carregarDados() {
 }
 
 carregarDados();
+
+function excluiTransacao(id){
+    const transacaoIndex = transacoesSalvas.findIndex((transacao) => transacao.id == id); //percorre o vetor todo executando uma função
+
+    transacoesSalvas.splice(transacaoIndex, 1);
+
+    localStorage.setItem(chave_transacoes_ls, JSON.stringify(transacoesSalvas));
+    carregarDados();
+}
