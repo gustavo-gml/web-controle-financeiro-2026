@@ -38,21 +38,20 @@ form.addEventListener("submit", (e) => {
 }); // método nativo de todo objeto
 
 function somaReceitaDespesa(transacao){
-    const elemento = transacao.valor > 0 ? receitaP : despesaP; //operador ternário, sempre retorna alguma coisa; condição, retorno se verdade/ retorno se falso
 
-    const substituir = transacao.valor > 0 ? "+ R$" : "- R$,";
-    
-    let valorAtual = elemento.innerHTML.replace(substituir, "");
-    valorAtual = parseFloat(valorAtual);
-
-    valorAtual += Math.abs(transacao.valor); //elimina o sinal
-    elemento.innerHTML = valorAtual;
+    const elemento = transacao.valor > 0 ? receitaP : despesaP
+    const substituir = transacao.valor > 0 ? "+ R$" : "- R$";
+    let valorAtual = elemento.innerHTML.replace(substituir, "")
+    valorAtual = parseFloat(valorAtual)
+    valorAtual += Math.abs(transacao.valor)
+    elemento.innerHTML = valorAtual
+    elemento.innerHTML = `${substituir}${valorAtual.toFixed(2)}`
 }
 
 function somaAoSaldo(transacao){
     const valorTransacao = transacao.valor; // pegamos para não mudar o valor inicial
     
-    let total = balancoH1.innerHTML.replace('R$',''); //não é o input (é uma tag), por isso o innerhtml
+    let total = balancoH1.innerHTML.replace('+ R$','- R$'); //não é o input (é uma tag), por isso o innerhtml
     // .replace é um método da string que substitui
     total = parseFloat(total);
     total += valorTransacao;
