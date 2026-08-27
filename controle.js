@@ -1,10 +1,12 @@
 const form = document.getElementById("form"); //boa pratica declarar como const 
 // document é um objeto de contexto sobre a pagina para acesso aos objetos
-// todas as classes js tem seu respectivo objeto
+// todas as classes js tem seu respectivo objeto que são retornadas ao usar o getelments
 // pegamos o form para o comprtamento do submit
 const descInput = document.querySelector('#descricao'); // outra forma de pegar o imput
-const valorInput = document.getElementById("montante")
-const balancoH1 = document.getElementById('balanco')
+const valorInput = document.getElementById("montante");
+const balancoH1 = document.getElementById('balanco');
+const receitaP = document.getElementById('din-positivo');
+const despesaP = document.getElementById('din-negativo');
 
 
 form.addEventListener("submit", (e) => {
@@ -32,7 +34,20 @@ form.addEventListener("submit", (e) => {
     }
     
     somaAoSaldo(transacao);
+    somaReceitaDespesa(transacao);
 }); // método nativo de todo objeto
+
+function somaReceitaDespesa(transacao){
+    const elemento = transacao.valor > 0 ? receitaP : despesaP; //operador ternário, sempre retorna alguma coisa; condição, retorno se verdade/ retorno se falso
+
+    const substituir = transacao.valor > 0 ? "+ R$" : "- R$,";
+    
+    let valorAtual = elemento.innerHTML.replace(substituir, "");
+    valorAtual = parseFloat(valorAtual);
+
+    valorAtual += Math.abs(transacao.valor); //elimina o sinal
+    elemento.innerHTML = valorAtual;
+}
 
 function somaAoSaldo(transacao){
     const valorTransacao = transacao.valor; // pegamos para não mudar o valor inicial
