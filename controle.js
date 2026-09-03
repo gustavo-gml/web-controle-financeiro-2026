@@ -137,24 +137,23 @@ function carregarDados() {
 
 carregarDados();
 
-function excluiTransacao(id){
+function excluiTransacao(id) {
+    const transacaoIndex = transacoesSalvas.findIndex((transacao) => transacao.id == id);
 
-
-    const elementoDOM = document.getElementById("transacao-" + id);
-    
-    if (elementoDOM) {
-            elementoDOM.remove();
-        }
-
-    transacoesSalvas.splice(transacaoIndex, 1); 
-    localStorage.setItem(chave_transacoes_ls, JSON.stringify(transacoesSalvas));
-
-    const transacaoIndex = transacoesSalvas.findIndex((transacao) => transacao.id == id); //percorre o vetor todo executando uma função
+    if (transacaoIndex === -1) return; 
 
     const transacaoRemovida = transacoesSalvas[transacaoIndex];
     const operacao = transacaoRemovida.valor > 0 ? "btn-receita" : "btn-despesa";
 
-    desfazerTransacoes(transacaoRemovida,operacao)
+    const elementoDOM = document.getElementById(`transacao-${id}`);
+    if (elementoDOM) {
+        elementoDOM.remove();
+    }
+
+    transacoesSalvas.splice(transacaoIndex, 1); 
+    localStorage.setItem(chave_transacoes_ls, JSON.stringify(transacoesSalvas));
+
+    desfazerTransacoes(transacaoRemovida, operacao);
 }
 
 function gerarProximoID(){
