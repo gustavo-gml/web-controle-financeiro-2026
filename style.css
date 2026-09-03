@@ -119,6 +119,14 @@ input[type="number"] {
   outline: 0;
 }
 
+#btn-receita{
+  background-color: #2ecc71;
+}
+
+#btn-despesa{
+  background-color: #f70101;
+}
+
 .transacoes {
   list-style-type: none;
   padding: 0;
