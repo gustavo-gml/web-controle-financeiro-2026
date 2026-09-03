@@ -139,14 +139,6 @@ carregarDados();
 
 function excluiTransacao(id){
 
-    const transacaoIndex = transacoesSalvas.findIndex((transacao) => transacao.id == id); //percorre o vetor todo executando uma função
-
-    const transacaoRemovida = transacoesSalvas[transacaoIndex];
-    const operacao = transacaoRemovida.valor > 0 ? "btn-receita" : "btn-despesa";
-
-    
-    desfazerTransacoes(transacaoRemovida,operacao)
-
 
     const elementoDOM = document.getElementById("transacao-" + id);
     
@@ -157,6 +149,12 @@ function excluiTransacao(id){
     transacoesSalvas.splice(transacaoIndex, 1); 
     localStorage.setItem(chave_transacoes_ls, JSON.stringify(transacoesSalvas));
 
+    const transacaoIndex = transacoesSalvas.findIndex((transacao) => transacao.id == id); //percorre o vetor todo executando uma função
+
+    const transacaoRemovida = transacoesSalvas[transacaoIndex];
+    const operacao = transacaoRemovida.valor > 0 ? "btn-receita" : "btn-despesa";
+
+    desfazerTransacoes(transacaoRemovida,operacao)
 }
 
 function gerarProximoID(){
